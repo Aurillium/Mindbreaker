@@ -46,6 +46,10 @@ func main() {
 	flag.BoolVar(&functional, "functional", false, "these files have functions")
 	flag.Parse()
 	files := flag.Args()
+	
+	if len(files) == 0 {
+		println("You need to specify one or more files to compile.")
+	}
 
 	if nTrue(raw, flat, functional) > 1 {
 		println("Arguments 'raw', 'flat', and 'functional' are mutually exclusive.")
