@@ -16,16 +16,16 @@ func prepare_function_linux(reader *bufio.Reader, return_reg string, stack_point
 	var push_pop string
 	var err error
 
-	if int_size == 1 {
+	if int_size == 8 {
 		size_word = "byte"
 		cell_reg = "dl"
-	} else if int_size == 2 {
+	} else if int_size == 16 {
 		size_word = "word"
 		cell_reg = "dx"
-	} else if int_size == 4 {
+	} else if int_size == 32 {
 		size_word = "dword"
 		cell_reg = "edx"
-	} else if int_size == 8 {
+	} else if int_size == 64 {
 		size_word = "qword"
 		cell_reg = "rdx"
 	} else {
@@ -34,7 +34,7 @@ func prepare_function_linux(reader *bufio.Reader, return_reg string, stack_point
 	push_pop = cell_reg
 	if int_size == 1 {
 		push_pop = "dx"
-	} else if target == "elf64" && int_size == 4 {
+	} else if target == "elf64" && int_size == 32 {
 		push_pop = "rdx"
 	}
 
@@ -241,7 +241,7 @@ func build_linux(length int, size int, files []string, out_file string, buffer *
 	var define_type string
 	var ra, rb, rc, rd, sp, bp string
 
-	if size == 4 {
+	if size == 32 {
 		define_type = "dd"
 		ra = "eax"
 		rb = "ebx"
@@ -249,7 +249,7 @@ func build_linux(length int, size int, files []string, out_file string, buffer *
 		rd = "edx"
 		sp = "esp"
 		bp = "ebp"
-	} else if size == 8 {
+	} else if size == 64 {
 		define_type = "dq"
 		ra = "rax"
 		rb = "rbx"

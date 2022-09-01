@@ -66,10 +66,10 @@ func main() {
 
 	if target == "elf32" {
 		address_reg = "edi"
-		build_linux(size, 4, files, output, nil, parse_mode)
+		build_linux(size, 32, files, output, nil, parse_mode)
 	} else if target == "elf64" {
 		address_reg = "rdi"
-		build_linux(size, 8, files, output, nil, parse_mode)
+		build_linux(size, 64, files, output, nil, parse_mode)
 	} else {
 		println("Handle invalid target")
 	}
