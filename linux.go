@@ -32,7 +32,7 @@ func prepare_function_linux(reader *bufio.Reader, return_reg string, stack_point
 		println("Handle invalid size")
 	}
 	push_pop = cell_reg
-	if int_size == 1 {
+	if int_size == 8 {
 		push_pop = "dx"
 	} else if target == "elf64" && int_size == 32 {
 		push_pop = "rdx"
@@ -133,6 +133,7 @@ func parse_linux(reader *bufio.Reader, size int, size_word string, cell_reg stri
 	multi_move_op := 0
 	eof := false
 	cell_loaded := false
+	size_bytes = size / 8
 
 	for {
 		b, err := reader.ReadByte()
@@ -191,9 +192,9 @@ func parse_linux(reader *bufio.Reader, size int, size_word string, cell_reg stri
 		} else if b == '-' {
 			multi_cell_op--
 		} else if b == '>' {
-			multi_move_op += size
+			multi_move_op += size_bytes
 		} else if b == '<' {
-			multi_move_op -= size
+			multi_move_op -= size_bytes
 		} else if b == '.' {
 			_, err = writer.WriteString("call dot\n")
 		} else if b == ',' {
